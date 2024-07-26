@@ -20,7 +20,6 @@ class Database {
   }
 }
 
-// Create a singleton instance and freeze it to prevent modifications
 const instance = new Database();
 Object.freeze(instance);
 

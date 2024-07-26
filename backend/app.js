@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const passport = require('passport');
 const session = require("express-session");
 
-// Config Dotenv
 require("dotenv").config({path: "./config/.env"})
 
 require("./config/passport.js");
@@ -26,10 +25,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes:
 app.use("/api/v1/", require("./routes/userRoute"))
 
-// Middlewares:
 app.use(errorHandler);
 
 module.exports = app;
