@@ -1,31 +1,27 @@
+// server.js
 const app = require("./app");
 const connectDB = require("./config/database");
 
-
-// Uncaught Exception:
-process.on("uncaughtException", (err)=>{
-    console.log("Error: ",err.message);
+// Uncaught Exception
+process.on("uncaughtException", (err) => {
+    console.log("Error:", err.message);
     console.log("Shutting down server due to uncaught Exception");
-    server.close(()=>{
-        process.exit(1);
-    });
-})
+    process.exit(1);
+});
 
-// Databse Connection:
-connectDB;
+// Connect to the database
+connectDB(); // <-- Call this function
 
+// Start listening
+const server = app.listen(process.env.PORT, () => {
+    console.log("Server is listening at PORT:", process.env.PORT);
+});
 
-// Listening to server:
-const server = app.listen(process.env.PORT, ()=>{
-    console.log("Server is listening at PORT:", process.env.PORT)
-})
-
-
-// Unhandled Promise rejection:
-process.on("unhandledRejection", (err)=>{
+// Unhandled Promise rejection
+process.on("unhandledRejection", (err) => {
     console.log("Error", err.message);
     console.log("Shutting down server due to unhandled promise rejection");
-    server.close(()=>{
+    server.close(() => {
         process.exit(1);
     });
-})
+});

@@ -1,26 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-class Database {
-  constructor() {
-    if (!Database.instance) {
-      this._connect();
-      Database.instance = this;
+const connectDB = async ()=>{
+    try{
+        let connection = await mongoose.connect(process.env.DB_URI)
+        console.log("Connected to Database: " + connection.connection.name);
     }
-    return Database.instance;
-  }
-
-  _connect() {
-    mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-      .then(() => {
-        console.log('Database connection successful');
-      })
-      .catch(err => {
-        console.error('Database connection error:', err);
-      });
-  }
+    catch(e){
+        console.log(e);
+    }
 }
 
-const instance = new Database();
-Object.freeze(instance);
-
-module.exports = instance;
+module.exports = connectDB;
